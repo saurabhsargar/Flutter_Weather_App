@@ -1,11 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
@@ -57,27 +53,27 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(0, -1.2),
+                alignment: const AlignmentDirectional(0, -1.2),
                 child: Container(
                   height: 300,
                   width: 600,
-                  decoration: BoxDecoration(color: Color(0xFF7161EF)),
+                  decoration: const BoxDecoration(color: Color(0xFF7161EF)),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, -0),
+                alignment: const AlignmentDirectional(0, -0),
                 child: Container(
                   height: 300,
                   width: 600,
-                  decoration: BoxDecoration(color: Color(0xFFf2ebfb)),
+                  decoration: const BoxDecoration(color: Color(0xFFf2ebfb)),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, 1.2),
+                alignment: const AlignmentDirectional(0, 1.2),
                 child: Container(
                   height: 300,
                   width: 600,
-                  decoration: BoxDecoration(color: Color(0xFF6c757d)),
+                  decoration: const BoxDecoration(color: Color(0xFF6c757d)),
                 ),
               ),
               BackdropFilter(

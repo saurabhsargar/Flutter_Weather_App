@@ -1,16 +1,40 @@
-# weather_app
+# Weather App 🌦️
 
-A new Flutter project.
+A Flutter-based Weather App that displays weather details using the BLoC (Business Logic Component) pattern. The app fetches data from the OpenWeather API and provides an intuitive user experience.
 
-## Getting Started
+## Features ✨
+- Current weather details for any city.
+- Sunrise and sunset timings.
+- Maximum and minimum temperature display.
+- State management using the BLoC pattern.
 
-This project is a starting point for a Flutter application.
+## Screenshots 📱
+![App Screenshot](assets\Screenshot1.png)
 
-A few resources to get you started if this is your first Flutter project:
+## Installation 🚀
+1. Clone the repository:
+git clone https://github.com/saurabhsargar/Flutter_Weather_App.git
+cd weather-app
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Install dependencies:
+flutter pub get
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Add your OpenWeather API key:
+Replace <YOUR_API_KEY> in the lib\data\my_data.dart or relevant file with your API key.
+You can get your API key from OpenWeather.
+
+4. Run the app:
+flutter run
+
+## Project Structure 📂
+The app follows a clean architecture with separation of concerns:
+- BLoC: Handles business logic and state management.
+- UI: Contains widgets for rendering the user interface.
+- Data: Fetches weather data using the OpenWeather API.
+
+## Dependencies 🛠️
+geolocator: ^12.0.0
+weather: ^3.1.1
+intl: ^0.19.0
+flutter_bloc: ^8.1.6
+equatable: ^2.0.5
