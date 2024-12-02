@@ -9,22 +9,23 @@ A Flutter-based Weather App that displays weather details using the BLoC (Busine
 - State management using the BLoC pattern.
 
 ## Screenshots 📱
-![App Screenshot](assets\Screenshot1.png)
+![App Screenshot](https://github.com/user-attachments/assets/27497091-4ac9-429b-bb78-4d3514d93b2b)
+
 
 ## Installation 🚀
 1. Clone the repository:
-- git clone https://github.com/saurabhsargar/Flutter_Weather_App.git
-- cd weather-app
+  - git clone https://github.com/saurabhsargar/Flutter_Weather_App.git
+  - cd weather-app
 
 2. Install dependencies:
-- flutter pub get
+  - flutter pub get
 
 3. Add your OpenWeather API key:
-- Replace <YOUR_API_KEY> in the lib\data\my_data.dart or relevant file with your API key.
-- You can get your API key from OpenWeather.
+  - Replace <YOUR_API_KEY> in the lib\data\my_data.dart or relevant file with your API key.
+  - You can get your API key from OpenWeather.
 
 4. Run the app:
-- flutter run
+  - flutter run
 
 ## Project Structure 📂
 The app follows a clean architecture with separation of concerns:
