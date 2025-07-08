@@ -1,0 +1,214 @@
+# app_logs.log - Main application log file
+2024-12-27 10:15:23.456 INFO [WeatherApp] Application started successfully
+2024-12-27 10:15:23.789 INFO [LocationService] Requesting location permissions
+2024-12-27 10:15:24.123 INFO [LocationService] Location permissions granted
+2024-12-27 10:15:24.456 INFO [WeatherService] Initializing weather API client
+2024-12-27 10:15:25.234 ERROR [WeatherService] API key validation failed - Invalid API key format
+2024-12-27 10:15:25.235 ERROR [WeatherService] Stack trace:
+    at WeatherApiClient.validateApiKey(weather_api_client.dart:45)
+    at WeatherService.initialize(weather_service.dart:23)
+    at WeatherBloc.fetchWeather(weather_bloc.dart:67)
+2024-12-27 10:15:30.678 WARNING [NetworkManager] Network connection unstable - retry attempt 1
+2024-12-27 10:15:31.234 INFO [WeatherService] Retrying API call with backup endpoint
+2024-12-27 10:15:32.456 ERROR [WeatherService] HTTP 401 Unauthorized - Invalid API credentials
+2024-12-27 10:15:32.457 ERROR [WeatherService] module_id: weather_service_module
+2024-12-27 10:15:35.789 FATAL [DatabaseHelper] SQLite database corruption detected
+2024-12-27 10:15:35.790 FATAL [DatabaseHelper] component: local_storage_manager
+2024-12-27 10:15:35.791 FATAL [DatabaseHelper] Error: database disk image is malformed
+2024-12-27 10:15:40.123 WARNING [WeatherWidget] Failed to load weather icon - asset not found
+2024-12-27 10:15:40.124 WARNING [WeatherWidget] Module: ui_components_module
+2024-12-27 10:15:40.125 WARNING [WeatherWidget] Missing asset: assets/icons/weather_cloudy.png
+2024-12-27 10:15:45.456 ERROR [LocationService] GPS timeout after 30 seconds
+2024-12-27 10:15:45.457 ERROR [LocationService] service: location_provider_service
+2024-12-27 10:15:45.458 ERROR [LocationService] Fallback to last known location failed - no cached location
+2024-12-27 10:15:50.789 CRITICAL [WeatherBloc] State management exception - null safety violation
+2024-12-27 10:15:50.790 CRITICAL [WeatherBloc] Module WeatherStateManager
+2024-12-27 10:15:50.791 CRITICAL [WeatherBloc] The following _CastError was thrown building WeatherScreen
+2024-12-27 10:15:50.792 CRITICAL [WeatherBloc] Null check operator used on a null value
+2024-12-27 10:16:00.123 ERROR [JsonParser] Failed to parse weather response - unexpected format
+2024-12-27 10:16:00.124 ERROR [JsonParser] @module(data_parsing_module)
+2024-12-27 10:16:00.125 ERROR [JsonParser] Expected field 'temperature' not found in response
+2024-12-27 10:16:10.456 WARNING [CacheManager] Cache size exceeded 100MB - initiating cleanup
+2024-12-27 10:16:10.457 WARNING [CacheManager] component: cache_service
+2024-12-27 10:16:15.789 ERROR [ThemeManager] Invalid theme configuration - missing color definitions
+2024-12-27 10:16:15.790 ERROR [ThemeManager] Module: ui_theme_module
+2024-12-27 10:16:20.123 TIMEOUT [WeatherService] API request timeout after 10 seconds
+2024-12-27 10:16:20.124 TIMEOUT [WeatherService] module_id: api_client_module
+2024-12-27 10:16:25.456 ERROR [ImageLoader] Failed to load background image - OutOfMemory
+2024-12-27 10:16:25.457 ERROR [ImageLoader] service: image_cache_service
+2024-12-27 10:16:30.789 WARNING [PermissionHandler] Camera permission denied by user
+2024-12-27 10:16:35.123 ERROR [WeatherRepository] Data synchronization failed - version conflict
+2024-12-27 10:16:35.124 ERROR [WeatherRepository] Module DataSyncManager
+
+===== error_logs.txt - Detailed error log =====
+[2024-12-27 10:15:25.235] SEVERE ERROR in WeatherService Module
+Error Type: API_AUTHENTICATION_FAILURE
+Module ID: weather_api_integration_module
+Component: WeatherApiClient
+Severity: HIGH
+Description: API key validation failed during service initialization
+Stack Trace:
+  File "lib/services/weather_service.dart", line 23, in initialize
+    await _apiClient.validateApiKey();
+  File "lib/api/weather_api_client.dart", line 45, in validateApiKey
+    throw ApiException('Invalid API key format');
+Error Code: WS_001
+Resolution: Check API key configuration in app settings
+
+[2024-12-27 10:15:35.791] CRITICAL ERROR in DatabaseHelper Module  
+Error Type: DATABASE_CORRUPTION
+Module ID: local_storage_module
+Component: SqliteHelper
+Severity: CRITICAL
+Description: SQLite database file corruption detected
+Stack Trace:
+  File "lib/database/database_helper.dart", line 89, in openDatabase
+    return await openDatabase(path);
+  File "package:sqflite/sqlite_api.dart", line 234, in openDatabase
+    throw DatabaseException('database disk image is malformed');
+Error Code: DB_002
+Resolution: Perform database recovery or reset local storage
+
+[2024-12-27 10:15:50.792] CRITICAL ERROR in WeatherBloc Module
+Error Type: NULL_SAFETY_VIOLATION  
+Module ID: state_management_module
+Component: WeatherStateManager
+Severity: CRITICAL
+Description: Null check operator used on null value in weather state
+Stack Trace:
+  File "lib/bloc/weather_bloc.dart", line 156, in _mapFetchWeatherToState
+    return WeatherLoaded(weather: event.weather!);
+  File "lib/screens/weather_screen.dart", line 67, in build
+    return _buildWeatherContent(state.weather!);
+Error Code: SM_003
+Resolution: Add null safety checks in weather state management
+
+[2024-12-27 10:16:00.125] ERROR in JsonParser Module
+Error Type: DATA_PARSING_FAILURE
+Module ID: data_parsing_module  
+Component: WeatherDataParser
+Severity: MEDIUM
+Description: Weather API response format mismatch
+Stack Trace:
+  File "lib/models/weather_response.dart", line 34, in fromJson
+    temperature: json['main']['temp'] as double,
+  File "lib/services/weather_parser.dart", line 78, in parseWeatherData
+    return WeatherResponse.fromJson(jsonData);
+Error Code: DP_004
+Resolution: Update parser to handle new API response format
+
+[2024-12-27 10:16:25.457] ERROR in ImageLoader Module
+Error Type: MEMORY_ALLOCATION_FAILURE
+Module ID: image_management_module
+Component: BackgroundImageLoader
+Severity: HIGH  
+Description: OutOfMemoryError while loading large background image
+Stack Trace:
+  File "lib/widgets/background_widget.dart", line 123, in loadBackgroundImage
+    final image = await ImageLoader.loadAsset(imagePath);
+  File "lib/utils/image_loader.dart", line 45, in loadAsset
+    return await rootBundle.load(assetPath);
+Error Code: IM_005
+Resolution: Implement image compression and memory management
+
+===== network_logs.out - Network operations log =====
+2024-12-27 10:15:30.678 [NetworkManager] Connection attempt to api.openweathermap.org
+2024-12-27 10:15:30.987 [NetworkManager] DNS resolution successful: 104.21.31.189
+2024-12-27 10:15:31.234 [NetworkManager] TCP connection established
+2024-12-27 10:15:31.456 [NetworkManager] TLS handshake initiated
+2024-12-27 10:15:31.789 [NetworkManager] TLS handshake failed - certificate verification error
+2024-12-27 10:15:31.790 [NetworkManager] module_id: network_security_module
+2024-12-27 10:15:32.123 [NetworkManager] Fallback to HTTP connection
+2024-12-27 10:15:32.456 [NetworkManager] HTTP GET /data/2.5/weather?lat=40.7128&lon=-74.0060&appid=invalid
+2024-12-27 10:15:32.789 [NetworkManager] Response: 401 Unauthorized
+2024-12-27 10:15:32.790 [NetworkManager] Error: {"cod":401,"message":"Invalid API key"}
+2024-12-27 10:15:35.123 [NetworkManager] Retry attempt 1 of 3
+2024-12-27 10:15:35.456 [NetworkManager] Connection timeout after 5 seconds
+2024-12-27 10:15:40.789 [NetworkManager] Retry attempt 2 of 3 
+2024-12-27 10:15:41.123 [NetworkManager] Service: api_retry_service
+2024-12-27 10:15:45.456 [NetworkManager] Max retries exceeded - giving up
+2024-12-27 10:15:45.457 [NetworkManager] Component: HttpClientManager
+
+===== ui_logs.log - UI component logs =====
+2024-12-27 10:15:40.123 WARNING [WeatherWidget] Asset loading failure
+2024-12-27 10:15:40.124 WARNING [WeatherWidget] Module: weather_icons_module
+2024-12-27 10:15:40.125 WARNING [WeatherWidget] Missing asset: assets/icons/weather_cloudy.png
+2024-12-27 10:15:45.456 ERROR [WeatherScreen] Widget tree rebuild exception
+2024-12-27 10:15:45.457 ERROR [WeatherScreen] module_id: ui_layout_module
+2024-12-27 10:15:45.458 ERROR [WeatherScreen] RenderFlex overflowed by 15 pixels on the right
+2024-12-27 10:15:50.789 ERROR [TemperatureDisplay] Number format exception
+2024-12-27 10:15:50.790 ERROR [TemperatureDisplay] Component: temperature_formatter
+2024-12-27 10:15:50.791 ERROR [TemperatureDisplay] Invalid double: "null°C"
+2024-12-27 10:15:55.123 WARNING [LocationDisplay] GPS coordinates formatting error
+2024-12-27 10:15:55.124 WARNING [LocationDisplay] service: coordinate_formatter_service
+2024-12-27 10:16:00.456 ERROR [RefreshIndicator] Pull-to-refresh failed
+2024-12-27 10:16:00.457 ERROR [RefreshIndicator] Module RefreshControlManager
+2024-12-27 10:16:05.789 WARNING [ThemeSelector] Dark mode transition animation stuttering
+2024-12-27 10:16:05.790 WARNING [ThemeSelector] @module(animation_controller_module)
+2024-12-27 10:16:10.123 ERROR [SearchBar] Text input validation failed
+2024-12-27 10:16:10.124 ERROR [SearchBar] module_id: input_validation_module
+
+===== performance_logs.txt - Performance monitoring =====
+2024-12-27 10:15:30.678 [PerformanceMonitor] Frame rendering time: 18.5ms (target: 16.67ms)
+2024-12-27 10:15:30.679 [PerformanceMonitor] Module: rendering_engine_module
+2024-12-27 10:15:35.123 [PerformanceMonitor] Memory usage: 245MB (warning threshold: 200MB)
+2024-12-27 10:15:35.124 [PerformanceMonitor] service: memory_monitor_service
+2024-12-27 10:15:40.456 [PerformanceMonitor] Jank detected: 3 frames dropped
+2024-12-27 10:15:40.457 [PerformanceMonitor] Component: UI_THREAD_MONITOR
+2024-12-27 10:15:45.789 [PerformanceMonitor] API response time: 3.2s (SLA: 2.0s)
+2024-12-27 10:15:45.790 [PerformanceMonitor] module_id: api_performance_module
+2024-12-27 10:15:50.123 [PerformanceMonitor] Battery drain rate: 15%/hour (expected: 8%/hour)
+2024-12-27 10:15:50.124 [PerformanceMonitor] Module BatteryOptimizationManager
+2024-12-27 10:15:55.456 [PerformanceMonitor] Storage usage: 1.2GB cache files
+2024-12-27 10:15:55.457 [PerformanceMonitor] @module(storage_management_module)
+
+===== security_logs.log - Security and permissions =====
+2024-12-27 10:15:25.234 [SecurityManager] API key validation initiated
+2024-12-27 10:15:25.235 [SecurityManager] FAILED: Invalid API key format detected
+2024-12-27 10:15:25.236 [SecurityManager] module_id: api_security_module
+2024-12-27 10:15:30.456 [PermissionManager] Location permission request
+2024-12-27 10:15:31.789 [PermissionManager] Location permission GRANTED by user
+2024-12-27 10:15:31.790 [PermissionManager] service: permission_handler_service
+2024-12-27 10:15:35.123 [SecurityManager] TLS certificate verification FAILED
+2024-12-27 10:15:35.124 [SecurityManager] Component: CertificateValidator
+2024-12-27 10:15:40.456 [DataProtection] Sensitive data encryption check
+2024-12-27 10:15:40.457 [DataProtection] WARNING: API key stored in plain text
+2024-12-27 10:15:40.458 [DataProtection] Module: encryption_module
+2024-12-27 10:15:45.789 [SecurityManager] Network traffic analysis - insecure HTTP detected
+2024-12-27 10:15:45.790 [SecurityManager] @module(network_security_module)
+2024-12-27 10:15:50.123 [PermissionManager] Camera permission DENIED by user
+2024-12-27 10:15:50.124 [PermissionManager] service: camera_permission_service
+
+===== debug_logs.txt - Debug information =====
+2024-12-27 10:15:23.456 [DEBUG] WeatherApp initialization started
+2024-12-27 10:15:23.789 [DEBUG] Loading configuration from assets/config/app_config.json
+2024-12-27 10:15:24.123 [DEBUG] module_id: configuration_module
+2024-12-27 10:15:24.456 [DEBUG] API endpoints loaded: 3 primary, 2 fallback
+2024-12-27 10:15:25.234 [DEBUG] Registering weather data providers
+2024-12-27 10:15:25.567 [DEBUG] Component: provider_registry_service
+2024-12-27 10:15:26.890 [DEBUG] State management initialization complete
+2024-12-27 10:15:27.123 [DEBUG] Module: bloc_initialization_module
+2024-12-27 10:15:30.456 [DEBUG] Building weather screen widget tree
+2024-12-27 10:15:30.789 [DEBUG] service: widget_builder_service
+2024-12-27 10:15:35.123 [DEBUG] Cache directory: /data/data/com.example.weather/cache
+2024-12-27 10:15:35.456 [DEBUG] @module(file_system_module)
+2024-12-27 10:15:40.789 [DEBUG] Theme system initialized - supporting light/dark modes
+2024-12-27 10:15:41.123 [DEBUG] Module ThemeConfigurationManager
+
+===== crash_logs.log - Application crashes =====
+2024-12-27 10:15:50.792 FATAL [CRASH] Application crashed
+2024-12-27 10:15:50.793 FATAL [CRASH] Exception: Null check operator used on a null value
+2024-12-27 10:15:50.794 FATAL [CRASH] module_id: weather_display_module
+2024-12-27 10:15:50.795 FATAL [CRASH] Stack trace:
+#0      WeatherScreen.build.<anonymous closure> (package:weather_app/screens/weather_screen.dart:67:35)
+#1      BlocBuilder.build (package:flutter_bloc/src/bloc_builder.dart:99:27)
+#2      StatefulBuilder.build (package:flutter/src/widgets/basic.dart:7145:28)
+#3      _StatefulBuilderState.build (package:flutter/src/widgets/basic.dart:7156:48)
+#4      StatefulElement.build (package:flutter/src/widgets/framework.dart:4992:27)
+#5      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:4879:15)
+
+2024-12-27 10:16:25.458 FATAL [CRASH] OutOfMemoryError
+2024-12-27 10:16:25.459 FATAL [CRASH] Component: image_processing_component
+2024-12-27 10:16:25.460 FATAL [CRASH] service: background_image_service
+2024-12-27 10:16:25.461 FATAL [CRASH] Available memory: 45MB, Required: 128MB
+2024-12-27 10:16:25.462 FATAL [CRASH] Module: memory_management_module
