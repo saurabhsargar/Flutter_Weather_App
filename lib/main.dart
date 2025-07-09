@@ -8,7 +8,7 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { const MyApp({super.key});
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder(
+      home: const HomeScreenWrapper(),
         future: _determinePosition(),
         builder: (context, snap){
           if(snap.hasData){
@@ -60,7 +60,7 @@ Future<Position> _determinePosition() async {
       // Android's shouldShowRequestPermissionRationale 
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
-      return Future.error('Location permissions are denied');
+      return Future.error(LocationPermissionException('Location permissions are denied'));
     }
   }
   
