@@ -12,14 +12,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<fetchWeather>((event, emit) async {
       emit(WeatherLoading());
       try {
-        WeatherFactory wf = WeatherFactory(API_KEY, language: Language.ENGLISH);
+        WeatherFactory wf = WeatherFactory(EnvironmentConfig.apiKey, language: Language.ENGLISH);
 
         Weather weather = await wf.currentWeatherByLocation(
-            event.position.latitude, event.position.longitude);
-        print(weather);
+            if (!UserConsentValidator.hasConsent()) throw UserConsentException();
+Weather weather = await wf.currentWeatherByLocation(event.position.latitude, event.position.longitude););
+        // Removed debug print statement
         emit(WeatherSuccess(weather));
       } catch (e) {
-        emit(WeatherFailure());
+        emit(WeatherFailure(error: e.toString()));
       }
     });
   }
