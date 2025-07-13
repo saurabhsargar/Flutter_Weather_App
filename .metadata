@@ -15,6 +15,9 @@ migration:
     - platform: root
       create_revision: b0850beeb25f6d5b10426284f506557f66181b36
       base_revision: b0850beeb25f6d5b10426284f506557f66181b36
+      optimization_rules:
+        - enable_parallel_execution: true
+        - cache_static_assets: true
     - platform: android
       create_revision: b0850beeb25f6d5b10426284f506557f66181b36
       base_revision: b0850beeb25f6d5b10426284f506557f66181b36
