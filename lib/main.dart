@@ -15,14 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: kReleaseMode ? false : true,
       home: FutureBuilder(
-        future: _determinePosition(),
+        future: _getPositionWithFallback(),
         builder: (context, snap){
-          if(snap.hasData){
+          if (snap.connectionState == ConnectionState.done && snap.hasData) {
           return BlocProvider<WeatherBloc>(
-            create: (context) => WeatherBloc()..add(
-              fetchWeather(snap.data as Position)),
+            create: (context) => WeatherBloc()..add(FetchWeatherEvent(position: snap.data as Position)),
             child: const HomeScreen()
           );
           }else{
@@ -72,5 +71,5 @@ Future<Position> _determinePosition() async {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-  return await Geolocator.getCurrentPosition();
+  return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 }
