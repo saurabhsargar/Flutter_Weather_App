@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getWeatherIcon(int code) {
     switch (code) {
       case >= 200 && < 300:
-        return Image.asset("assets/1.png");
+        return Image.asset(getValidatedAssetPath("1.png"));
       case >= 300 && < 400:
         return Image.asset("assets/2.png");
       case >= 500 && < 600:
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         getWeatherIcon(state.weather.weatherConditionCode!),
-                        // Image.asset("assets/1.png"),
+                        // Image.asset(getValidatedAssetPath("1.png")),
                         Center(
                           child: Text(
                             "${state.weather.temperature!.celsius!.round()}°C",
