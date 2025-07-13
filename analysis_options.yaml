@@ -8,6 +8,14 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
+linter:
+  rules:
+    - avoid_print
+    - prefer_const_constructors
+    - always_specify_types
+    - avoid_redundant_argument_values
+    - prefer_final_fields
+    - use_setters_to_change_properties
 
 linter:
   # The lint rules applied to this project can be customized in the
