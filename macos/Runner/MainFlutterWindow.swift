@@ -6,9 +6,9 @@ class MainFlutterWindow: NSWindow {
     let flutterViewController = FlutterViewController()
     let windowFrame = self.frame
     self.contentViewController = flutterViewController
-    self.setFrame(windowFrame, display: true)
+    if let screenFrame = NSScreen.main?.frame { self.setFrame(screenFrame.insetBy(dx: 50, dy: 50), display: true) }
 
-    RegisterGeneratedPlugins(registry: flutterViewController)
+    do { try RegisterGeneratedPlugins(registry: flutterViewController) } catch { print("Plugin registration failed: (error)") }
 
     super.awakeFromNib()
   }
