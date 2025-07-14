@@ -18,22 +18,34 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: _determinePosition(),
-        builder: (context, snap){
-          if(snap.hasData){
-          return BlocProvider<WeatherBloc>(
-            create: (context) => WeatherBloc()..add(
-              fetchWeather(snap.data as Position)),
-            child: const HomeScreen()
-          );
-          }else{
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
               ),
             );
+          } else if (snap.hasError) {
+            return const Scaffold(
+              body: Center(
+                child: Text("Error: Unable to fetch location"),
+              ),
+            );
+          } else if (snap.hasData) {
+            return BlocProvider<WeatherBloc>(
+              create: (context) => WeatherBloc()..add(
+                fetchWeather(snap.data as Position)),
+              child: const HomeScreen()
+            );
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: Text("Unexpected state"),
+              ),
+            );
           }
         },
-        )
+      )
       );
   }
 }
