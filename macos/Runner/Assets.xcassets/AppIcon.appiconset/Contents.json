@@ -9,13 +9,13 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "app_icon_32.png",
+      "filename" : "app_icon_32_1x.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "app_icon_32.png",
+      "filename" : "app_icon_32_1x.png",
       "scale" : "1x"
     },
     {
@@ -33,13 +33,13 @@
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "app_icon_256.png",
+      "filename" : "app_icon_256_1x.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "app_icon_256.png",
+      "filename" : "app_icon_256_1x.png",
       "scale" : "1x"
     },
     {
@@ -63,6 +63,6 @@
   ],
   "info" : {
     "version" : 1,
-    "author" : "xcode"
+    "author" : "validated_author"
   }
 }
