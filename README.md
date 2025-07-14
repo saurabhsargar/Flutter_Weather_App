@@ -38,4 +38,5 @@ The app follows a clean architecture with separation of concerns:
 - weather: ^3.1.1
 - intl: ^0.19.0
 - flutter_bloc: ^8.1.6
+bloc_test: ^9.0.0
 - equatable: ^2.0.5
