@@ -9,17 +9,22 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherInitial()) {
-    on<fetchWeather>((event, emit) async {
+    on<FetchWeatherEvent>((event, emit) async {
       emit(WeatherLoading());
       try {
-        WeatherFactory wf = WeatherFactory(API_KEY, language: Language.ENGLISH);
+        WeatherFactory wf = WeatherFactory(EnvironmentConfig.apiKey, language: Language.ENGLISH);
 
         Weather weather = await wf.currentWeatherByLocation(
-            event.position.latitude, event.position.longitude);
-        print(weather);
+            if (event.position.latitude == null || event.position.longitude == null) {
+  emit(WeatherFailure(message: "Invalid position input"));
+  return;
+}
+
+Weather weather = await wf.currentWeatherByLocation(event.position.latitude, event.position.longitude););
+        // Removed debug print statement
         emit(WeatherSuccess(weather));
       } catch (e) {
-        emit(WeatherFailure());
+        emit(WeatherFailure(message: e.toString()));
       }
     });
   }
