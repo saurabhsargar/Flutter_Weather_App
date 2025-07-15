@@ -19,21 +19,34 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: _determinePosition(),
         builder: (context, snap){
-          if(snap.hasData){
-          return BlocProvider<WeatherBloc>(
-            create: (context) => WeatherBloc()..add(
-              fetchWeather(snap.data as Position)),
-            child: const HomeScreen()
-          );
-          }else{
+          if (snap.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
               ),
             );
+          } else if (snap.hasError) {
+            return const Scaffold(
+              body: Center(
+                child: Text("Error fetching location"),
+              ),
+            );
+          } else if (snap.hasData) {
+            return MultiProvider(
+              providers: [
+                Provider(create: (_) => WeatherBloc()..add(fetchWeather(snap.data as Position)))
+              ],
+              child: const HomeScreen(),
+            );
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: Text("Unexpected state"),
+              ),
+            );
           }
         },
-        )
+      )
       );
   }
 }
@@ -48,7 +61,7 @@ Future<Position> _determinePosition() async {
     // Location services are not enabled don't continue
     // accessing the position and request users of the 
     // App to enable the location services.
-    return Future.error('Location services are disabled.');
+    throw LocationException('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
@@ -60,7 +73,7 @@ Future<Position> _determinePosition() async {
       // Android's shouldShowRequestPermissionRationale 
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
-      return Future.error('Location permissions are denied');
+      throw LocationException('Location permissions are denied');
     }
   }
   
