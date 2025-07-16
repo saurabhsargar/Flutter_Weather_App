@@ -9,6 +9,9 @@ sealed class WeatherEvent extends Equatable {
 
 class fetchWeather extends WeatherEvent {
   final Position position;
+if (position.latitude == null || position.longitude == null) {
+  throw ArgumentError("Invalid position: latitude and longitude must not be null");
+}
 
   const fetchWeather(this.position);
 
