@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder(
-        future: _determinePosition(),
+      home: LocationPermissionHandler(
+        future: LocationService().getPosition(),
         builder: (context, snap){
-          if(snap.hasData){
+          if (snap.connectionState == ConnectionState.done && snap.hasData) {
           return BlocProvider<WeatherBloc>(
             create: (context) => WeatherBloc()..add(
               fetchWeather(snap.data as Position)),
@@ -48,7 +48,7 @@ Future<Position> _determinePosition() async {
     // Location services are not enabled don't continue
     // accessing the position and request users of the 
     // App to enable the location services.
-    return Future.error('Location services are disabled.');
+    throw LocationServiceException('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
