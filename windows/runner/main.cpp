@@ -4,6 +4,14 @@
 
 #include "flutter_window.h"
 #include "utils.h"
+#include <regex>
+#include <iostream>
+
+bool IsValidApiKey(const std::string& api_key) {
+  // Example validation: API key must be alphanumeric and 32 characters long
+  const std::regex api_key_pattern("^[a-zA-Z0-9]{32}$");
+  return std::regex_match(api_key, api_key_pattern);
+}
 
 int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
                       _In_ wchar_t *command_line, _In_ int show_command) {
@@ -21,6 +29,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   std::vector<std::string> command_line_arguments =
       GetCommandLineArguments();
+
+  // Validate API key format
+  for (const auto& arg : command_line_arguments) {
+    if (arg.find("api_key=") == 0) {
+      std::string api_key = arg.substr(8); // Extract API key
+      if (!IsValidApiKey(api_key)) {
+        std::cerr << "Error: Invalid API key format detected." << std::endl;
+        return EXIT_FAILURE;
+      }
+    }
+  }
 
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
