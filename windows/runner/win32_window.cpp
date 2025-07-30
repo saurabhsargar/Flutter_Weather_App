@@ -161,13 +161,16 @@ LRESULT CALLBACK Win32Window::WndProc(HWND const window,
   if (message == WM_NCCREATE) {
     auto window_struct = reinterpret_cast<CREATESTRUCT*>(lparam);
     SetWindowLongPtr(window, GWLP_USERDATA,
-                     reinterpret_cast<LONG_PTR>(window_struct->lpCreateParams));
+                     reinterpret_cast<LONG_PTR>(window_struct->lpCreateParams);
 
     auto that = static_cast<Win32Window*>(window_struct->lpCreateParams);
     EnableFullDpiSupportIfAvailable(window);
     that->window_handle_ = window;
-  } else if (Win32Window* that = GetThisFromHandle(window)) {
-    return that->MessageHandler(window, message, wparam, lparam);
+  } else {
+    Win32Window* that = GetThisFromHandle(window);
+    if (that != nullptr) {
+      return that->MessageHandler(window, message, wparam, lparam);
+    }
   }
 
   return DefWindowProc(window, message, wparam, lparam);
