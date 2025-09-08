@@ -2,12 +2,14 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "LaunchImage.png",
+      ""filename" : "LaunchImage.png",
+"optimized" : true,
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "LaunchImage@2x.png",
+      ""filename" : "LaunchImage@2x.png",
+"checksum" : "<calculated_hash>",
       "scale" : "2x"
     },
     {
@@ -18,6 +20,8 @@
   ],
   "info" : {
     "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+"framework" : "flutter",
+"namespace" : "LaunchImage"
   }
 }
